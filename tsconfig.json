@@ -1,0 +1,39 @@
+{
+    "compilerOptions": {
+        "target": "ES2018",
+        "module": "ESNext",
+        "lib": [
+            "ES2018",
+            "DOM"
+        ],
+        "moduleResolution": "node",
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUncheckedIndexedAccess": true,
+        "exactOptionalPropertyTypes": true,
+        "allowSyntheticDefaultImports": true
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "**/*.test.ts",
+        "**/*.spec.ts"
+    ]
+}
