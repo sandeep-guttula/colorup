@@ -165,8 +165,9 @@ export interface ValidationResult {
 export interface ColorPlugin {
     name: string;
     version: string;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     methods: Record<string, Function>;
-    install: (colorx: any) => void;
+    install: (colorx: unknown) => void;
 }
 
 // Utility types
@@ -179,7 +180,7 @@ export class ColorError extends Error {
     constructor(
         message: string,
         public code: string,
-        public input?: any
+        public input?: unknown
     ) {
         super(message);
         this.name = 'ColorError';
