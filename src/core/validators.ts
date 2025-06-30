@@ -15,7 +15,6 @@ import {
     ColorObject
 } from './types';
 
-import { isRgbComponent, isPercentage, isAlpha } from './utils';
 import {
     NAMED_COLORS,
     HEX_COLOR_REGEX,
@@ -38,6 +37,33 @@ export function isNamedColor(value: unknown): value is NamedColor {
     return typeof value === 'string' && NAMED_COLORS.includes(value.toLowerCase());
 }
 
+/**
+ * Validate if a number is in alpha range (0 to 1).
+ */
+export function isValidAlpha(value: unknown): value is number {
+    return typeof value === 'number' && value >= ALPHA_RANGE.min && value <= ALPHA_RANGE.max;
+}
+
+/**
+ * Validate if a number is in RGB range (0 to 255).
+ */
+export function isValidRgbComponent(value: unknown): value is number {
+    return typeof value === 'number' && value >= RGB_RANGE.min && value <= RGB_RANGE.max;
+}
+
+/**
+ * Validate if a number is in percentage range (0 to 100).
+ */
+export function isValidPercentage(value: unknown): value is number {
+    return typeof value === 'number' && value >= PERCENT_RANGE.min && value <= PERCENT_RANGE.max;
+}
+
+/**
+ * Validate if a number is a valid hue (0-360).
+ */
+export function isValidHue(value: unknown): value is number {
+    return typeof value === 'number' && value >= 0 && value <= 360;
+}
 
 /**
  * Check if a value is a valid RGB color object.
@@ -49,10 +75,10 @@ export function isRgbColor(value: unknown): value is RgbColor {
         typeof r === 'number' &&
         typeof g === 'number' &&
         typeof b === 'number' &&
-        isRgbComponent(r) &&
-        isRgbComponent(g) &&
-        isRgbComponent(b) &&
-        (a === undefined || isAlpha(a))
+        isValidRgbComponent(r) &&
+        isValidRgbComponent(g) &&
+        isValidRgbComponent(b) &&
+        (a === undefined || isValidAlpha(a))
     );
 }
 
@@ -66,10 +92,10 @@ export function isHslColor(value: unknown): value is HslColor {
         typeof h === 'number' &&
         typeof s === 'number' &&
         typeof l === 'number' &&
-        typeof h === 'number' &&
-        isPercentage(s) &&
-        isPercentage(l) &&
-        (a === undefined || isAlpha(a))
+        isValidHue(h) &&
+        isValidPercentage(s) &&
+        isValidPercentage(l) &&
+        (a === undefined || isValidAlpha(a))
     );
 }
 
@@ -83,9 +109,10 @@ export function isHsvColor(value: unknown): value is HsvColor {
         typeof h === 'number' &&
         typeof s === 'number' &&
         typeof v === 'number' &&
-        isPercentage(s) &&
-        isPercentage(v) &&
-        (a === undefined || isAlpha(a))
+        isValidHue(h) &&
+        isValidPercentage(s) &&
+        isValidPercentage(v) &&
+        (a === undefined || isValidAlpha(a))
     );
 }
 
@@ -94,7 +121,17 @@ export function isHsvColor(value: unknown): value is HsvColor {
  * (limited validation, assumes it's valid if not hex/named but still string)
  */
 export function isCssColor(value: unknown): value is CssColor {
-    return typeof value === 'string';
+    if (typeof value !== 'string') return false;
+    
+    // Basic CSS color patterns
+    const cssPatterns = [
+        /^rgb\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*\)$/i,
+        /^rgba\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*[\d.]+\s*\)$/i,
+        /^hsl\(\s*\d+\s*,\s*\d+%\s*,\s*\d+%\s*\)$/i,
+        /^hsla\(\s*\d+\s*,\s*\d+%\s*,\s*\d+%\s*,\s*[\d.]+\s*\)$/i,
+    ];
+    
+    return cssPatterns.some(pattern => pattern.test(value));
 }
 
 /**
@@ -119,6 +156,27 @@ export function validateColorInput(input: unknown): ValidationResult {
 
     if (!format) {
         errors.push('Unrecognized color format');
+    } else {
+        switch (format) {
+            case ColorFormat.HEX:
+                if (!isHexColor(input)) errors.push('Invalid hex color format');
+                break;
+            case ColorFormat.RGB:
+                if (!isRgbColor(input)) errors.push('Invalid RGB color object');
+                break;
+            case ColorFormat.HSL:
+                if (!isHslColor(input)) errors.push('Invalid HSL color object');
+                break;
+            case ColorFormat.HSV:
+                if (!isHsvColor(input)) errors.push('Invalid HSV color object');
+                break;
+            case ColorFormat.NAMED:
+                if (!isNamedColor(input)) errors.push('Invalid named color');
+                break;
+            case ColorFormat.CSS:
+                if (!isCssColor(input)) errors.push('Invalid CSS color string');
+                break;
+        }
     }
 
     return {
@@ -146,64 +204,10 @@ export function isNormalizedColor(obj: unknown): obj is ColorObject {
     );
 }
 
-
-/**
- * Validate if a number is in alpha range (0 to 1).
- */
-export function isAlpha(value: unknown): value is number {
-    return typeof value === 'number' && value >= ALPHA_RANGE.min && value <= ALPHA_RANGE.max;
-}
-
-/**
- * Validate if a number is in RGB range (0 to 255).
- */
-export function isRgb(value: unknown): value is number {
-    return typeof value === 'number' && value >= RGB_RANGE.min && value <= RGB_RANGE.max;
-}
-
-/**
- * Validate if a number is in percentage range (0 to 100).
- */
-export function isPercentage(value: unknown): value is number {
-    return typeof value === 'number' && value >= PERCENT_RANGE.min && value <= PERCENT_RANGE.max;
-}
-
 /**
  * Validate if a value is a valid color input.
  * This checks for all supported formats and returns a detailed result.
  */
 export function isValidColorInput(value: unknown): ValidationResult {
-    const format = detectFormat(value);
-    const errors: string[] = [];
-
-    if (!format) {
-        errors.push('Unrecognized color format');
-    } else {
-        switch (format) {
-            case ColorFormat.HEX:
-                if (!isHexColor(value)) errors.push('Invalid hex color format');
-                break;
-            case ColorFormat.RGB:
-                if (!isRgbColor(value)) errors.push('Invalid RGB color object');
-                break;
-            case ColorFormat.HSL:
-                if (!isHslColor(value)) errors.push('Invalid HSL color object');
-                break;
-            case ColorFormat.HSV:
-                if (!isHsvColor(value)) errors.push('Invalid HSV color object');
-                break;
-            case ColorFormat.NAMED:
-                if (!isNamedColor(value)) errors.push('Invalid named color');
-                break;
-            case ColorFormat.CSS:
-                if (!isCssColor(value)) errors.push('Invalid CSS color string');
-                break;
-        }
-    }
-
-    return {
-        isValid: errors.length === 0,
-        format,
-        errors
-    };
+    return validateColorInput(value);
 }
