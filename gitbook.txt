@@ -1,0 +1,39 @@
+colorup/
+├── docs/
+│   ├── README.md                 # Landing page
+│   ├── SUMMARY.md               # Table of contents
+│   ├── getting-started/
+│   │   ├── README.md
+│   │   ├── installation.md
+│   │   ├── quick-start.md
+│   │   └── basic-usage.md
+│   ├── api-reference/
+│   │   ├── README.md
+│   │   ├── color-creation.md
+│   │   ├── format-conversion.md
+│   │   ├── color-manipulation.md
+│   │   ├── palette-generation.md
+│   │   ├── accessibility.md
+│   │   ├── blending.md
+│   │   └── export-tokens.md
+│   ├── guides/
+│   │   ├── README.md
+│   │   ├── color-theory.md
+│   │   ├── accessibility-guide.md
+│   │   ├── design-systems.md
+│   │   └── framework-integration.md
+│   ├── examples/
+│   │   ├── README.md
+│   │   ├── basic-examples.md
+│   │   ├── advanced-examples.md
+│   │   ├── react-integration.md
+│   │   └── vue-integration.md
+│   ├── resources/
+│   │   ├── README.md
+│   │   ├── migration-guide.md
+│   │   ├── troubleshooting.md
+│   │   └── changelog.md
+│   ├── book.json               # GitBook configuration
+│   └── assets/                 # Images and assets
+│       ├── images/
+│       └── code-samples/

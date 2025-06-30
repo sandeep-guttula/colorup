@@ -1,0 +1,63 @@
+{
+  "title": "ColorUp.js Documentation",
+  "description": "Comprehensive documentation for ColorUp.js - A modern color utility library",
+  "author": "Sandeep Guttula",
+  "language": "en",
+  "gitbook": ">=3.0.0",
+  "root": "./docs",
+  "structure": {
+    "readme": "README.md",
+    "summary": "SUMMARY.md"
+  },
+  "plugins": [
+    "theme-default",
+    "livereload",
+    "search",
+    "sharing",
+    "fontsettings",
+    "highlight",
+    "copy-code-button",
+    "github",
+    "edit-link",
+    "prism",
+    "advanced-emoji",
+    "anchorjs",
+    "ga",
+    "sitemap-general"
+  ],
+  "pluginsConfig": {
+    "github": {
+      "url": "https://github.com/sandeep-guttula/colorup"
+    },
+    "edit-link": {
+      "base": "https://github.com/sandeep-guttula/colorup/tree/main/docs",
+      "label": "Edit This Page"
+    },
+    "sharing": {
+      "facebook": true,
+      "twitter": true,
+      "google": false,
+      "weibo": false,
+      "instapaper": false,
+      "vk": false,
+      "all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+    },
+    "fontsettings": {
+      "theme": "white",
+      "family": "sans",
+      "size": 2
+    },
+    "prism": {
+      "css": [
+        "prism-themes/themes/prism-ghcolors.css"
+      ]
+    },
+    "sitemap-general": {
+      "prefix": "https://colorup-docs.gitbook.io/"
+    }
+  },
+  "variables": {
+    "version": "1.0.0",
+    "npmPackage": "colorupjs"
+  }
+}
