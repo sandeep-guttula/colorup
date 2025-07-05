@@ -30,6 +30,6 @@ const lighter = lighten(baseColor, 20);
 const darker = darken(baseColor, 15);
 
 console.log('Original:', baseColor); // { r: 52, g: 152, b: 219 }
-console.log('Lighter:', lighter); // { r: 123, g: 198, b: 248, a: 1 }
-console.log('Darker:', darker); // { r: 28, g: 128, b: 194, a: 1 }
+console.log('Lighter:', lighter); // { r: 138, g: 196, b: 234 }
+console.log('Darker:', darker); // { r: 29, g: 110, b: 165 }
 ```

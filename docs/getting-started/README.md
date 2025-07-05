@@ -26,14 +26,6 @@ ColorUp.js stands out from other color libraries because it offers:
 
 Work with any color format seamlessly - HEX, RGB, HSL, HSV, named colors, and CSS strings.
 
-### 🎨 **Intelligent Color Theory**
-
-Generate harmonious color palettes using proven color theory algorithms.
-
-### ♿ **Built-in Accessibility**
-
-WCAG compliance checking built right into the core API.
-
 ### 🚀 **Performance First**
 
 Lightweight, tree-shakeable, and optimized for modern JavaScript environments.
@@ -47,27 +39,19 @@ Full TypeScript support, comprehensive documentation, and intuitive API design.
 Here's a taste of what you can do with ColorUp.js:
 
 ```javascript
-import { ColorUp } from 'colorupjs';
+import { hexToRgb, lighten, isHexColor } from 'colorupjs';
 
-// Create a color from any format
-const blue = new ColorUp('#3498db');
-const red = new ColorUp({ r: 231, g: 76, b: 60 });
-const green = new ColorUp('hsl(120, 100%, 50%)');
+// Convert colors
+const rgbColor = hexToRgb('#3498db');
+console.log(rgbColor); // { r: 52, g: 152, b: 219 }
 
-// Transform colors effortlessly
-const lightBlue = blue.lighten(20);
-const desaturatedRed = red.desaturate(30);
+// Manipulate colors
+const lighterRgb = lighten(rgbColor, 20);
+console.log(lighterRgb); // { r: 133, g: 200, b: 246 }
 
-// Generate beautiful palettes
-const palette = blue.palette('analogous', { steps: 5 });
-
-// Check accessibility compliance
-const contrast = blue.contrast('#ffffff');
-console.log(`Contrast ratio: ${contrast.ratio}`);
-console.log(`WCAG grade: ${contrast.grade}`);
-
-// Export for design systems
-const tokens = palette.export('css', { prefix: 'color' });
+// Validate colors
+const isValid = isHexColor('#3498db');
+console.log(isValid); // true
 ```
 
 ## Next Steps

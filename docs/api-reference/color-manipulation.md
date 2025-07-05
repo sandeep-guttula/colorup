@@ -2,48 +2,96 @@
 
 ColorUp.js provides a powerful set of functions for manipulating colors. Whether you need to adjust brightness, change saturation, or create a color variation, these tools make it easy to get the perfect shade.
 
-## `adjust()`
+## Manipulation Functions
 
-The `adjust()` function is the primary way to manipulate colors. It accepts a color and an object with adjustment properties, returning a new `Color` object with the changes applied.
+### `isLight`
+
+Determines if a color is light based on its luminance.
 
 **Signature:**
 
 ```typescript
-adjust(color: AnyColor, adjustments: AdjustmentOptions): ColorObject
+isLight(color: RgbColor): boolean
 ```
-
-**Adjustment Options:**
-
-- `lightness`: Adjusts the lightness (0-100).
-- `saturation`: Adjusts the saturation (0-100).
-- `hue`: Adjusts the hue (0-360).
 
 **Example:**
 
 ```javascript
-import { adjust, color } from 'colorupjs';
+import { isLight } from 'colorupjs';
 
-const myColor = color('#3498db');
-
-const lighter = adjust(myColor, { lightness: 70 });
-console.log(lighter.hex); // '#a9d7f4'
-
-const desaturated = adjust(myColor, { saturation: 30 });
-console.log(desaturated.hex); // '#6a8fa8'
+const color = { r: 255, g: 255, b: 255 };
+const isLightColor = isLight(color);
+console.log(isLightColor); // true
 ```
 
-## Manipulation Functions
+### `isDark`
 
-For more specific adjustments, the library also provides individual manipulation functions.
-
-### `lighten`
-
-Lightens a color by a given amount (0-100).
+Determines if a color is dark based on its luminance.
 
 **Signature:**
 
 ```typescript
-lighten(color: AnyColor, amount: number): ColorObject
+isDark(color: RgbColor): boolean
+```
+
+**Example:**
+
+```javascript
+import { isDark } from 'colorupjs';
+
+const color = { r: 0, g: 0, b: 0 };
+const isDarkColor = isDark(color);
+console.log(isDarkColor); // true
+```
+
+### `adjustBrightness`
+
+Adjusts the brightness of a color by a given amount.
+
+**Signature:**
+
+```typescript
+adjustBrightness(color: RgbColor, amount: number): RgbColor
+```
+
+**Example:**
+
+```javascript
+import { adjustBrightness } from 'colorupjs';
+
+const color = { r: 52, g: 152, b: 219 };
+const brighterColor = adjustBrightness(color, 20);
+console.log(brighterColor); // { r: 133, g: 200, b: 246 }
+```
+
+### `adjustSaturation`
+
+Adjusts the saturation of a color by a given amount.
+
+**Signature:**
+
+```typescript
+adjustSaturation(color: RgbColor, amount: number): RgbColor
+```
+
+**Example:**
+
+```javascript
+import { adjustSaturation } from 'colorupjs';
+
+const color = { r: 52, g: 152, b: 219 };
+const moreSaturated = adjustSaturation(color, 20);
+console.log(moreSaturated); // { r: 27, g: 165, b: 248 }
+```
+
+### `lighten`
+
+Lightens a color by a given amount.
+
+**Signature:**
+
+```typescript
+lighten(color: RgbColor, amount: number): RgbColor
 ```
 
 **Example:**
@@ -51,18 +99,19 @@ lighten(color: AnyColor, amount: number): ColorObject
 ```javascript
 import { lighten } from 'colorupjs';
 
-const lighterColor = lighten('#3498db', 20);
-console.log(lighterColor.hex); // '#85c8f6'
+const color = { r: 52, g: 152, b: 219 };
+const lighterColor = lighten(color, 20);
+console.log(lighterColor); // { r: 133, g: 200, b: 246 }
 ```
 
 ### `darken`
 
-Darkens a color by a given amount (0-100).
+Darkens a color by a given amount.
 
 **Signature:**
 
 ```typescript
-darken(color: AnyColor, amount: number): ColorObject
+darken(color: RgbColor, amount: number): RgbColor
 ```
 
 **Example:**
@@ -70,46 +119,29 @@ darken(color: AnyColor, amount: number): ColorObject
 ```javascript
 import { darken } from 'colorupjs';
 
-const darkerColor = darken('#3498db', 20);
-console.log(darkerColor.hex); // '#1c64a1'
+const color = { r: 52, g: 152, b: 219 };
+const darkerColor = darken(color, 20);
+console.log(darkerColor); // { r: 28, g: 100, b: 161 }
 ```
 
-### `saturate`
+### `invertColor`
 
-Increases the saturation of a color by a given amount (0-100).
+Inverts the color.
 
 **Signature:**
 
 ```typescript
-saturate(color: AnyColor, amount: number): ColorObject
+invertColor(color: RgbColor): RgbColor
 ```
 
 **Example:**
 
 ```javascript
-import { saturate } from 'colorupjs';
+import { invertColor } from 'colorupjs';
 
-const moreSaturated = saturate('#3498db', 20);
-console.log(moreSaturated.hex); // '#1ba5f8'
-```
-
-### `desaturate`
-
-Decreases the saturation of a color by a given amount (0-100).
-
-**Signature:**
-
-```typescript
-desaturate(color: AnyColor, amount: number): ColorObject
-```
-
-**Example:**
-
-```javascript
-import { desaturate } from 'colorupjs';
-
-const lessSaturated = desaturate('#3498db', 20);
-console.log(lessSaturated.hex); // '#4d8bc0'
+const color = { r: 52, g: 152, b: 219 };
+const inverted = invertColor(color);
+console.log(inverted); // { r: 203, g: 103, b: 36 }
 ```
 
 ### `grayscale`
@@ -119,7 +151,7 @@ Converts a color to grayscale.
 **Signature:**
 
 ```typescript
-grayscale(color: AnyColor): ColorObject
+grayscale(color: RgbColor): RgbColor
 ```
 
 **Example:**
@@ -127,25 +159,7 @@ grayscale(color: AnyColor): ColorObject
 ```javascript
 import { grayscale } from 'colorupjs';
 
-const gray = grayscale('#3498db');
-console.log(gray.hex); // '#969696'
-```
-
-### `invert`
-
-Inverts the color.
-
-**Signature:**
-
-```typescript
-invert(color: AnyColor): ColorObject
-```
-
-**Example:**
-
-```javascript
-import { invert } from 'colorupjs';
-
-const inverted = invert('#3498db');
-console.log(inverted.hex); // '#cba724'
+const color = { r: 52, g: 152, b: 219 };
+const gray = grayscale(color);
+console.log(gray); // { r: 123, g: 123, b: 123 }
 ```

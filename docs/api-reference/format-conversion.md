@@ -128,3 +128,41 @@ import { nameToHex } from 'colorupjs';
 const hex = nameToHex('tomato');
 console.log(hex); // '#ff6347'
 ```
+
+### `hexToHsl`
+
+Converts a HEX color string to an HSL object.
+
+**Signature:**
+
+```typescript
+hexToHsl(hex: string): { h: number; s: number; l: number }
+```
+
+**Example:**
+
+```javascript
+import { hexToHsl } from 'colorupjs';
+
+const hsl = hexToHsl('#3498db');
+console.log(hsl); // { h: 204, s: 70, l: 53 }
+```
+
+### `HexToName`
+
+Converts a HEX color to its CSS named color equivalent.
+
+**Signature:**
+
+```typescript
+HexToName(hex: string): string
+```
+
+**Example:**
+
+```javascript
+import { HexToName } from 'colorupjs';
+
+const name = HexToName('#ff6347');
+console.log(name); // 'tomato'
+```

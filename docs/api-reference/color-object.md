@@ -24,18 +24,4 @@ interface ColorObject {
 - **`alpha`**: The alpha transparency value (0-1).
 - **`format`**: The original format of the input color (e.g., `'hex'`, `'rgb'`, `'named'`).
 
-### Example
-
-```javascript
-import { color } from 'colorupjs';
-
-const myColor = color('#3498db');
-
-console.log(myColor.hex);     // '#3498db'
-console.log(myColor.rgb);     // { r: 52, g: 152, b: 219 }
-console.log(myColor.hsl);     // { h: 204, s: 70, l: 53 }
-console.log(myColor.alpha);   // 1
-console.log(myColor.format);  // 'hex'
-```
-
 By providing a consistent object structure, ColorUp.js makes it easy to switch between color models and access the values you need without manual conversions.

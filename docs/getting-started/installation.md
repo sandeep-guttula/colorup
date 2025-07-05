@@ -50,15 +50,12 @@ const rgb: RgbColor = hexToRgb('#3498db');
 
 ## Tree Shaking
 
-ColorUp.js is built with tree shaking in mind. You can import only the functions you need:
+ColorUp.js is built with tree shaking in mind. Modern bundlers (like Webpack, Rollup, Parcel) will automatically remove unused exports when you import specific functions from the main `colorupjs` package:
 
 ```javascript
-// Only imports the specific conversion functions
-import { hexToRgb, rgbToHsl } from 'colorupjs/converters';
+// Only hexToRgb and lighten will be included in your bundle
+import { hexToRgb, lighten } from 'colorupjs';
 
-// Only imports color validation utilities
-import { isHexColor, isRgbColor } from 'colorupjs/validators';
-
-// Only imports color modification functions
-import { lighten, darken, adjustSaturation } from 'colorupjs/modifiers';
+// All functions are imported, but unused ones will be tree-shaken
+import * as ColorUp from 'colorupjs';
 ```
