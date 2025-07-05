@@ -8,28 +8,25 @@ ColorUp.js is designed to make working with colors effortless and powerful. Whet
 
 ## Key Features
 
-- 🎯 **Universal Color Support** - HEX, RGB, HSL, HSV, named colors, and CSS strings
-- 🎨 **Intelligent Palette Generation** - Color theory-based harmony algorithms
-- ♿ **WCAG Accessibility Tools** - Built-in contrast checking and compliance
-- 🌈 **Advanced Color Blending** - Photoshop-style blend modes
-- 📱 **Framework Ready** - React, Vue, Angular integration examples
-- 🔧 **Design Token Export** - CSS variables, SCSS, JSON, and more
-- 📦 **Tree Shakeable** - Import only what you need
-- 🔒 **Type Safe** - Full TypeScript support
+- 🎯 **Color Conversions** - Convert between HEX, RGB, HSL, and named colors.
+- 🔧 **Color Manipulation** - Adjust brightness, saturation, and more.
+- 🔍 **Color Validation** - A set of functions to validate color formats.
+- 📦 **Tree Shakeable** - Import only what you need for optimal bundle size.
+- 🔒 **Type Safe** - Full TypeScript support with comprehensive type definitions.
+- 🚀 **Zero Dependencies** - Lightweight and self-contained.
+- 🌐 **Cross Platform** - Works in browsers and Node.js environments.
 
 ## Quick Example
 
 ```javascript
-import { ColorUp } from 'colorupjs';
+import { hexToRgb, lighten, isDark } from 'colorupjs';
 
-// Create and manipulate colors
-const color = new ColorUp('#3498db');
-color.lighten(20).saturate(10);
+// Convert a hex color to RGB
+const rgbColor = hexToRgb('#3498db'); // { r: 52, g: 152, b: 219 }
 
-// Generate palettes
-const palette = color.palette('analogous', { steps: 5 });
+// Lighten a color
+const lighterColor = lighten(rgbColor, 20); // { r: 123, g: 198, b: 248, a: 1 }
 
-// Check accessibility
-const contrast = color.contrast('#ffffff');
-console.log(contrast.grade); // "AA" or "AAA"
+// Check if a color is dark
+const isColorDark = isDark(rgbColor); // true
 ```
